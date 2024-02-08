@@ -7,11 +7,11 @@ from .forms import TransactionForm
 
 
 def start_page(request):
+	error = ''
 	if request.method == 'POST':
 		form = TransactionForm(request.POST)
 		if form.is_valid():
 			form.save()
-			
 		else:
 			error = "Неверно заполненная форма"
 
