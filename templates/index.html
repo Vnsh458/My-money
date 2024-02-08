@@ -37,38 +37,6 @@
 		</div>
 	</nav>
 
-	<!-- 
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Дата</th>
-				<th scope="col">Название</th>
-				<th scope="col">Категория</th>
-				<th scope="col">Трата</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
-			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>@fat</td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td colspan="2">Larry the Bird</td>
-				<td>@twitter</td>
-			</tr>
-		</tbody>
-	</table>
--->
-
 	<form action="" method="post">
 		{% csrf_token %}
 
@@ -80,6 +48,30 @@
 		<button type="submit">Сохранить</button>
 	</form>
 
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Дата</th>
+				<th>Назыание</th>
+				<th>Категория</th>
+				<th>Цена</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for transaction in transactions %}
+			<tr>
+				<td>{{transaction.date}}</td>
+				<td>{{transaction.name}}</td>
+				<td>{{transaction.category}}</td>
+				<td>{{transaction.expenses}}</td>
+				<td>
+					<a href="{% url 'transaction:delete' transaction_id=transaction.id %}">Удалить</a>
+					<a href="{% url 'transaction:update' transaction_id=transaction.id %}">Редактировать</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

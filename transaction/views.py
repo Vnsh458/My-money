@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from rest_framework.viewsets import ModelViewSet
+from django.views.generic import DeleteView
 
 from .serializers import OrderSerializer
 from .models import Transaction
@@ -18,11 +19,34 @@ def start_page(request):
 	form = TransactionForm()
 
 	data = {
+		'transactions': Transaction.objects.all(),
 		'form': form,
-		'error': error
+		'error': error,
 	}
 	return render(request, 'index.html', data)
+
+
+def show_sopping_list(request):
+	return(request, 'shopping_list.html')
+
 
 class TransactionView(ModelViewSet):
 	queryset = Transaction.objects.all()
 	serializer_class = OrderSerializer
+
+
+'''class NewDeleteView(DeleteView):
+	model = Transaction
+	success_url = 'index.html'
+	template_name = 'index.html'''
+
+
+def delete(request, transaction_id):
+	transaction = Transaction.objects.get(id=transaction_id)
+	transaction.delete()
+	return redirect('/')
+
+def update(request, transaction_id):
+	transaction = Transaction.objects.get(id=transaction_id)
+	transaction.delete()
+	return redirect('start_page')
