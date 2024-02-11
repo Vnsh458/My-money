@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from rest_framework.viewsets import ModelViewSet
-from django.views.generic import DeleteView
+from django.views.generic import UpdateView
 
 from .serializers import OrderSerializer
 from .models import Transaction
@@ -35,10 +35,11 @@ class TransactionView(ModelViewSet):
 	serializer_class = OrderSerializer
 
 
-'''class NewDeleteView(DeleteView):
-	model = Transaction
-	success_url = 'index.html'
-	template_name = 'index.html'''
+class Update(UpdateView):
+	model = Transaction	
+	template_name = 'update_transaction.html'
+
+	fields = ['date', 'name', 'category', 'expenses']
 
 
 def delete(request, transaction_id):
@@ -46,7 +47,7 @@ def delete(request, transaction_id):
 	transaction.delete()
 	return redirect('/')
 
-def update(request, transaction_id):
+'''def update(request, transaction_id):
 	transaction = Transaction.objects.get(id=transaction_id)
 	transaction.delete()
-	return redirect('start_page')
+	return redirect('start_page')'''
