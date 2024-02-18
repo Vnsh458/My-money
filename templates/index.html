@@ -84,7 +84,7 @@
 				<td>{{transaction.category}}</td>
 				<td>{{transaction.expenses}}</td>
 				<td>
-
+					<a href="{% url 'transaction:delete' transaction.id %}">Удалить</a>
 					<a href="{% url 'transaction:update' transaction.id %}">Редактировать</a>
 				</td>
 			</tr>

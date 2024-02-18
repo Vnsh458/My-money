@@ -93,9 +93,9 @@ class Update(UpdateView):
 	fields = ['date', 'name', 'category', 'expenses']
 
 
-# def delete(request, transaction_id):
-# 	transaction = get_object_or_404(Transaction, id=transaction_id)
-# 	transaction.delete()
-# 	return redirect('/')
+def delete(request, transaction_pk):
+	transaction = get_object_or_404(Transaction, id=transaction_pk)
+	transaction.delete()
+	return redirect('/')
 
 '''Нужно привести все в порядок'''
