@@ -93,10 +93,9 @@ class Update(UpdateView):
 	fields = ['date', 'name', 'category', 'expenses']
 
 
-class Delete(DeleteView):
-	model = Transaction
-	template_name = 'delete_transaction.html'
-	success_url = '/'
-	pk_url_kwarg = 'transaction_pk'
+def delete(request, transaction_pk):
+  transaction = get_object_or_404(Transaction, id=transaction_pk)
+  transaction.delete()
+  return redirect('/')
 
 '''Нужно привести все в порядок'''
