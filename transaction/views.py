@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework.viewsets import ModelViewSet
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from .serializers import OrderSerializer
 from datetime import datetime
 
@@ -94,8 +94,8 @@ class Update(UpdateView):
 
 
 def delete(request, transaction_pk):
-	transaction = get_object_or_404(Transaction, id=transaction_pk)
-	transaction.delete()
-	return redirect('/')
+  transaction = get_object_or_404(Transaction, id=transaction_pk)
+  transaction.delete()
+  return redirect('/')
 
 '''Нужно привести все в порядок'''
