@@ -9,15 +9,15 @@ from .forms import TransactionForm, CategoriesForm
 
 
 def start_page(request):
-	error = ''
-	if request.method == 'POST':
-		form = TransactionForm(request.POST)
-		if form.is_valid():
-			form.save()
-		else:
-			error = "Неверно заполненная форма"
+	# error = ''
+	# if request.method == 'POST':
+	# 	form = TransactionForm(request.POST)
+	# 	if form.is_valid():
+	# 		form.save()
+	# 	else:
+	# 		error = "Неверно заполненная форма"
 
-	form = TransactionForm()
+	# form = TransactionForm()
 
 	transactions = Transaction.objects.filter(date__year=datetime.now().year, date__month=datetime.now().month)
 	result_expenses = 0
@@ -28,10 +28,10 @@ def start_page(request):
 	data = {
 		'categories': Category.objects.all(),
 		'transactions': transactions,
-		'form': form,
-		'error': error,
 		'result': result_expenses,
 	}
+
+	data.update(show_transaction_form(request))
 	return render(request, 'index.html', data)
 
 def format(request, category_id):
@@ -54,6 +54,19 @@ def format(request, category_id):
 
 def show_transaction_info(request, category_id):
 	pass
+
+def show_transaction_form(request):
+	error = ''
+	if request.method == 'POST':
+		form = TransactionForm(request.POST)
+		if form.is_valid():
+			form.save()
+		else:
+			error = "Неверно заполненная форма"
+
+	form = TransactionForm()
+
+	return{'form': form, 'error': error}
 
 
 def show_sopping_list(request):
@@ -99,3 +112,6 @@ def delete(request, transaction_pk):
   return redirect('/')
 
 '''Нужно привести все в порядок'''
+
+def show_autorisation_page(request):
+	return render(request, 'autorisation.html')

@@ -11,5 +11,6 @@ urlpatterns = [
 	path('<int:pk>/update', views.Update.as_view(), name='update'),
 	path('shopping_list/', views.show_sopping_list, name='shopping_list'),
 	path('categories/', views.show_categories, name='categories'),
-	path('<int:category_id>', views.format, name='formatting')
+	path('<int:category_id>', views.format, name='formatting'),
+	path('autorisation/', views.show_autorisation_page, name='autorisation')
 ]
