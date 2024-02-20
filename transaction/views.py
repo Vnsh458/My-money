@@ -9,15 +9,15 @@ from .forms import TransactionForm, CategoriesForm
 
 
 def start_page(request):
-	# error = ''
-	# if request.method == 'POST':
-	# 	form = TransactionForm(request.POST)
-	# 	if form.is_valid():
-	# 		form.save()
-	# 	else:
-	# 		error = "Неверно заполненная форма"
+	error = ''
+	if request.method == 'POST':
+		form = TransactionForm(request.POST)
+		if form.is_valid():
+			form.save()
+		else:
+			error = "Неверно заполненная форма"
 
-	# form = TransactionForm()
+	form = TransactionForm()
 
 	transactions = Transaction.objects.filter(date__year=datetime.now().year, date__month=datetime.now().month)
 	result_expenses = 0
@@ -29,9 +29,11 @@ def start_page(request):
 		'categories': Category.objects.all(),
 		'transactions': transactions,
 		'result': result_expenses,
+		'form': form,
+		'error': error,
 	}
 
-	data.update(show_transaction_form(request))
+	# data.update(show_transaction_form(request))
 	return render(request, 'index.html', data)
 
 def format(request, category_id):
@@ -55,18 +57,18 @@ def format(request, category_id):
 def show_transaction_info(request, category_id):
 	pass
 
-def show_transaction_form(request):
-	error = ''
-	if request.method == 'POST':
-		form = TransactionForm(request.POST)
-		if form.is_valid():
-			form.save()
-		else:
-			error = "Неверно заполненная форма"
+# def show_transaction_form(request):
+# 	error = ''
+# 	if request.method == 'POST':
+# 		form = TransactionForm(request.POST)
+# 		if form.is_valid():
+# 			form.save()
+# 		else:
+# 			error = "Неверно заполненная форма"
 
-	form = TransactionForm()
+# 	form = TransactionForm()
 
-	return{'form': form, 'error': error}
+# 	return{'form': form, 'error': error}
 
 
 def show_sopping_list(request):
