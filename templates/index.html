@@ -1,108 +1,76 @@
-<!doctype html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Document</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
+{% block content%}
+<!-- Form for creating transaction -->
 
-<body>
+<form action="" method="post">
+	{% csrf_token %}
 
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="{% url 'transaction:start_page' %}">My money</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="{% url 'transaction:start_page' %}">Главная</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'transaction:categories'%}">Категории</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'transaction:shopping_list'%}">Список покупок</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{% url 'transaction:autorisation' %}">Вход</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	{{ form.date }}
+	{{ form.name }}
+	{{ form.category }}
+	{{ form.expenses }}
+	<span>{{ error }}</span>
+	<button type="submit">Сохранить</button>
+</form>
 
-	<form action="" method="post">
-		{% csrf_token %}
+<!-- Category filter block -->
 
-		{{ form.date }}
-		{{ form.name }}
-		{{ form.category }}
-		{{ form.expenses }}
-		<span>{{ error }}</span>
-		<button type="submit">Сохранить</button>
-	</form>
-
-
+<div class="category_filter">
 	<a href="{% url 'transaction:formatting' category_id=0 %}" type="submit">Все категории</a>
 	{% for category in categories %}
 
 	<a href="{% url 'transaction:formatting' category_id=category.id %}" type="submit">{{ category.name }}</a>
 
 	{% endfor %}
+</div>
 
-	<form action="" method="post">
-		{% csrf_token %}
-		<select name="Period" id="">
-			<option value=""><a href="" type="submit">День</a></option>
-			<option value=""><a href="" type="submit">Неделя</a></option>
-			<option value="" selected><a href="" type="submit">Месяц</a></option>
-		</select>
+<!-- Time filter -->
 
-		<button type="submit">-></button>
-	</form>
+<form action="" method="post">
+	{% csrf_token %}
+	<select name="Period" id="">
+		<option value=""><a href="" type="submit">День</a></option>
+		<option value=""><a href="" type="submit">Неделя</a></option>
+		<option value="" selected><a href="" type="submit">Месяц</a></option>
+	</select>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Дата</th>
-				<th>Название</th>
-				<th>Категория</th>
-				<th>Цена</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for transaction in transactions %}
-			<tr>
-				<td>{{transaction.date}}</td>
-				<td>{{transaction.name}}</td>
-				<td>{{transaction.category}}</td>
-				<td>{{transaction.expenses}}</td>
-				<td>
-					<a href="{% url 'transaction:delete' transaction.id %}">Удалить</a>
-					<a href="{% url 'transaction:update' transaction.id %}">Редактировать</a>
-				</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-		<footer>
-			<tr>
-				<th>Итог</th>
-				<th></th>
-				<th></th>
-				<th>{{ result }}</th>
-			</tr>
-		</footer>
-	</table>
+	<button type="submit">-></button>
+</form>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-		crossorigin="anonymous"></script>
-</body>
+<!-- Table with transaction info -->
 
-</html>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Дата</th>
+			<th>Название</th>
+			<th>Категория</th>
+			<th>Цена</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for transaction in transactions %}
+		<tr>
+			<td>{{transaction.date}}</td>
+			<td>{{transaction.name}}</td>
+			<td>{{transaction.category}}</td>
+			<td>{{transaction.expenses}}</td>
+			<td>
+				<a href="{% url 'transaction:delete' transaction.id %}">Удалить</a>
+				<a href="{% url 'transaction:update' transaction.id %}">Редактировать</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+	<footer>
+		<tr>
+			<th>Итог</th>
+			<th></th>
+			<th></th>
+			<th>{{ result }}</th>
+		</tr>
+	</footer>
+</table>
+
+{% endblock %}
