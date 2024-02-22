@@ -57,7 +57,11 @@
 			<td>{{transaction.category}}</td>
 			<td>{{transaction.expenses}}</td>
 			<td>
-				<a href="{% url 'transaction:delete' transaction.id %}">Удалить</a>
+
+				<form action="{% url 'transaction:delete' transaction.id %}" method="POST" id="delete-button">
+					{% csrf_token %}
+					<input type="submit" value="Удалить"></input>
+				</form>
 				<a href="{% url 'transaction:update' transaction.id %}">Редактировать</a>
 			</td>
 		</tr>

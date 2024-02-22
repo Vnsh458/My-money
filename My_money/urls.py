@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
-from transaction.views import TransactionView, show_sopping_list, start_page
+from transaction.views import TransactionView, show_sopping_list
 
 
 router = SimpleRouter()
