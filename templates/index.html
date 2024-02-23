@@ -17,12 +17,20 @@
 <!-- Category filter block -->
 
 <div class="category_filter">
-	<a href="{% url 'transaction:formatting' category_id=0 %}" type="submit">Все категории</a>
-	{% for category in categories %}
+	<input type="checkbox" id="checkbox-toggle">
+	<label for="checkbox-toggle">Нажмите, чтобы развернуть</label>
+	<ul class="category-list">
+		<li class="category-point"><a href="{% url 'transaction:formatting' category_id=0 %}" type="submit">Все
+				категории</a></li>
 
-	<a href="{% url 'transaction:formatting' category_id=category.id %}" type="submit">{{ category.name }}</a>
+		{% for category in categories %}
 
-	{% endfor %}
+		<li class="category-point">
+			<a href="{% url 'transaction:formatting' category_id=category.id %}" type="submit">{{ category.name }}</a>
+		</li>
+
+		{% endfor %}
+	</ul>
 </div>
 
 <!-- Time filter -->
@@ -58,11 +66,11 @@
 			<td>{{transaction.expenses}}</td>
 			<td>
 
-				<form action="{% url 'transaction:delete' transaction.id %}" method="POST" id="delete-button">
+				<form action="{% url 'transaction:delete' transaction.id %}" method="POST" class="delete-button">
 					{% csrf_token %}
-					<input type="submit" value="Удалить"></input>
+					<input type="submit" value="Удалить" class="delete-button-input"></input>
 				</form>
-				<a href="{% url 'transaction:update' transaction.id %}">Редактировать</a>
+				<a href="{% url 'transaction:update' transaction.id %}" class="button-link">Редактировать</a>
 			</td>
 		</tr>
 		{% endfor %}

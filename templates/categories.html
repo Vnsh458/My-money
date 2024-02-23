@@ -23,12 +23,12 @@
 		<tr>
 			<td>{{category.name}}</td>
 			<td>
-				<form action="{% url 'transaction:delete_category' category.id %}" method="POST" id="delete-button">
+				<form action="{% url 'transaction:delete_category' category.id %}" method="POST" class="delete-button">
 					{% csrf_token %}
 					<input type="submit" value="Удалить"></input>
 				</form>
 
-				<a href="">Редактировать</a>
+				<a href="" class="button-link">Редактировать</a>
 			</td>
 		</tr>
 		{% endfor %}
