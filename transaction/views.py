@@ -76,12 +76,5 @@ class UpdateTransaction(UpdateView):
 	fields = ['date', 'name', 'category', 'expenses']
 
 
-# class UpdateCategories(UpdateView):
-# 	model = Category	
-# 	template_name = 'update_category.html'
-
-# 	fields = ['name']
-
-
 def show_autorisation_page(request):
 	return render(request, 'autorisation.html')
